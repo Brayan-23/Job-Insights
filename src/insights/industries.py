@@ -11,25 +11,6 @@ def get_unique_industries(path: str) -> List[str]:
 
     return list_industries
 
-    """Checks all different industries and returns a list of them
-
-    Must call `read`
-
-    Parameters
-    ----------
-    path : str
-        Must be passed to `read`
-
-    Returns
-    -------
-    list
-        List of unique industries
-    """
-    raise NotImplementedError
-
-
-print(len(get_unique_industries("data/jobs.csv")))
-
 
 def filter_by_industry(jobs: List[Dict], industry: str) -> List[Dict]:
     """Filters a list of jobs by industry
