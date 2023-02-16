@@ -1,7 +1,18 @@
 from typing import Union, List, Dict
+from src.insights.jobs import read
 
 
 def get_max_salary(path: str) -> int:
+    jobs = read(path)
+    max_salary = 0
+    for type in jobs:
+        if type.get('max_salary') == '':
+            max_salary = max_salary
+        elif type["max_salary"] != 'invalid' and \
+                max_salary < int(type['max_salary']):
+            max_salary = int(type["max_salary"])
+
+    return max_salary
     """Get the maximum salary of all jobs
 
     Must call `read`
@@ -19,7 +30,20 @@ def get_max_salary(path: str) -> int:
     raise NotImplementedError
 
 
+print(get_max_salary('data/jobs.csv'))
+
+
 def get_min_salary(path: str) -> int:
+    jobs = read(path)
+    min_salary = get_max_salary('data/jobs.csv')
+    for type in jobs:
+        if type.get('min_salary') == '':
+            min_salary = min_salary
+        elif type["min_salary"] != 'invalid' and \
+                min_salary > int(type['min_salary']):
+            min_salary = int(type["min_salary"])
+
+    return min_salary
     """Get the minimum salary of all jobs
 
     Must call `read`
