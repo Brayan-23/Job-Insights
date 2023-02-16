@@ -25,10 +25,15 @@ def read(path: str) -> List[Dict]:
     raise NotImplementedError
 
 
-print(read('data/jobs.csv')[0])
-
-
 def get_unique_job_types(path: str) -> List[str]:
+    jobs = read(path)
+    list_types = []
+    for type in jobs:
+        if not type["job_type"] in list_types:
+            list_types.append(type["job_type"])
+
+    return list_types
+
     """Checks all different job types and returns a list of them
 
     Must call `read`
