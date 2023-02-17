@@ -30,42 +30,29 @@ def get_min_salary(path: str) -> int:
 
 def matches_salary_range(job: Dict, salary: Union[int, str]) -> bool:
 
-    if 'min_salary' not in job or 'max_salary' not in job:
-        raise ValueError
-    elif (
-        isinstance(job.get('min_salary'), int) is False
-        or isinstance(job.get('max_salary'), int) is False
-    ):
-        raise ValueError
-    elif int(job.get("min_salary")) > int(job.get("max_salary")):
-        raise ValueError
-    elif (
-        isinstance(salary, int) is False
-        and isinstance(salary, str) is False
-    ):
-        raise ValueError
+    try:
+        max = int(job.get('max_salary'))
+        min = int(job.get('min_salary'))
+        salary_int = int(salary)
 
-    result = int(job["min_salary"]) <= int(salary) <= int(job["max_salary"])
+        if min > max:
+            raise ValueError
 
-    return result
+        return min <= salary_int <= max
+    except (TypeError, KeyError):
+        raise ValueError
 
 
 def filter_by_salary_range(
     jobs: List[dict],
     salary: Union[str, int]
 ) -> List[Dict]:
-    """Filters a list of jobs by salary range
 
-    Parameters
-    ----------
-    jobs : list
-        The jobs to be filtered
-    salary : int
-        The salary to be used as filter
-
-    Returns
-    -------
-    list
-        Jobs whose salary range contains `salary`
-    """
-    raise NotImplementedError
+    list_sucess = []
+    for job in jobs:
+        try:
+            if matches_salary_range(job, salary) is True:
+                list_sucess.append(job)
+        except ValueError as err:
+            print(err)
+    return list_sucess
